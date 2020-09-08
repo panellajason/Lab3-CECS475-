@@ -6,6 +6,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace Lab3
 {
@@ -13,6 +14,12 @@ namespace Lab3
     {
         public string BrokerName { get; set; }
         public List<Stock> StockLists = new List<Stock>();
+
+        public static ReaderWriterLockSlim myLock = new ReaderWriterLockSlim();
+        readonly string docPath = @"C:\Lab3_output.txt";
+
+        public string titles = "Broker".PadRight(10) + "Stock".PadRight(15) +
+            "Value".PadRight(10) + "Changes".PadRight(10) + "Date and Time";
 
         public StockBroker(string name)
         {
@@ -23,12 +30,20 @@ namespace Lab3
         {
             StockLists.Add(stock);
 
-            //stock.stockEvent += EventHandler(___, ____, ___)
+            //This line doesn't trigger the EventHandler? 
+            stock.StockEvent += EventHandler;
         }
 
         /* EventHandler(______________________________)
         *  Display broker name, stock name, current stock value, and number of changes)
         *  Note: name.PadRight(10) to align the column.
         */
+        void EventHandler(Object sender, StockNotification e)
+        {
+           
+                //Stock newStock = (Stock)sender;
+                Console.WriteLine(this.BrokerName + e.StockName + e.CurrentValue + e.NumChanges);
+            
+        }
     }
 }

@@ -13,7 +13,7 @@ namespace Lab3
     {
         private readonly Thread _thread;
 
-        //public event EventHandler<StockNotification> StockEvent;
+        public event EventHandler<StockNotification> StockEvent;
 
         public string StockName { get; set; }
         public int InitialValue { get; set; }
@@ -30,6 +30,7 @@ namespace Lab3
             MaxChange = maxChange;
             Threshold = threshold;
 
+            //Don't think this line works, Activate is never called
             _thread = new Thread(new ThreadStart(Activate));
         }
 
@@ -54,7 +55,8 @@ namespace Lab3
             if(valueDifference > Threshold)
 
             {
-                //Raise the event
+                StockNotification cArgs = new StockNotification(this.StockName, this.CurrentValue, this.NumChanges);
+                StockEvent?.Invoke(this, cArgs);
 
             }
         }
@@ -67,6 +69,7 @@ namespace Lab3
          * current stock value and number of changes in the stock.
          *
          */
+
 
     }
 }
