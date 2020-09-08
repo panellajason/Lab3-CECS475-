@@ -30,8 +30,8 @@ namespace Lab3
             MaxChange = maxChange;
             Threshold = threshold;
 
-            //Don't think this line works, Activate is never called
             _thread = new Thread(new ThreadStart(Activate));
+            _thread.Start();
         }
 
 
@@ -55,21 +55,11 @@ namespace Lab3
             if(valueDifference > Threshold)
 
             {
-                StockNotification cArgs = new StockNotification(this.StockName, this.CurrentValue, this.NumChanges);
+                StockNotification cArgs = new StockNotification(StockName, CurrentValue, NumChanges);
                 StockEvent?.Invoke(this, cArgs);
 
             }
         }
-
-
-        /*
-         * 
-         * Event property StockEvent: 
-         * Class EventData from EventArgs to store the event’s data: stock name, 
-         * current stock value and number of changes in the stock.
-         *
-         */
-
 
     }
 }

@@ -29,8 +29,6 @@ namespace Lab3
         public void AddStock(Stock stock)
         {
             StockLists.Add(stock);
-
-            //This line doesn't trigger the EventHandler? 
             stock.StockEvent += EventHandler;
         }
 
@@ -41,8 +39,8 @@ namespace Lab3
         void EventHandler(Object sender, StockNotification e)
         {
            
-                //Stock newStock = (Stock)sender;
-                Console.WriteLine(this.BrokerName + e.StockName + e.CurrentValue + e.NumChanges);
+                Stock newStock = (Stock)sender;
+                Console.WriteLine(BrokerName.PadRight(10) + e.StockName.PadRight(12) + e.CurrentValue.ToString().PadRight(10) + e.NumChanges);
             
         }
     }

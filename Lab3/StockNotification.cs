@@ -12,7 +12,9 @@ namespace Lab3
 
         public StockNotification(String stockName, int currentValue, int numChanges)
         {
-
+            StockName = stockName;
+            CurrentValue = currentValue;
+            NumChanges = numChanges;
         }
     }
 }
