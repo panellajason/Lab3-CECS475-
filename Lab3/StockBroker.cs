@@ -5,6 +5,7 @@
 // Lab 3
 
 using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Threading;
 
@@ -13,13 +14,12 @@ namespace Lab3
     public class StockBroker
     {
         public string BrokerName { get; set; }
+
         public List<Stock> StockLists = new List<Stock>();
-
         public static ReaderWriterLockSlim myLock = new ReaderWriterLockSlim();
-        readonly string docPath = @"C:\Lab3_output.txt";
+        readonly string docPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+        public string titles = "Broker".PadRight(10) + "Stock".PadRight(12) + "Value".PadRight(7) + "Changes";
 
-        public string titles = "Broker".PadRight(10) + "Stock".PadRight(15) +
-            "Value".PadRight(10) + "Changes".PadRight(10) + "Date and Time";
 
         public StockBroker(string name)
         {
@@ -32,16 +32,35 @@ namespace Lab3
             stock.StockEvent += EventHandler;
         }
 
-        /* EventHandler(______________________________)
+        /* EventHandler method
         *  Display broker name, stock name, current stock value, and number of changes)
         *  Note: name.PadRight(10) to align the column.
         */
         void EventHandler(Object sender, StockNotification e)
         {
-           
-                Stock newStock = (Stock)sender;
-                Console.WriteLine(BrokerName.PadRight(10) + e.StockName.PadRight(12) + e.CurrentValue.ToString().PadRight(10) + e.NumChanges);
-            
+            using StreamWriter outputFile = new StreamWriter(Path.Combine(docPath, "output.txt"), true);
+
+            if(GlobalHelper.writeTitle)
+            {
+                GlobalHelper.writeTitle = false;
+                Console.WriteLine(titles);
+                outputFile.WriteLine(titles);
+            }
+
+            string output = BrokerName.PadRight(10) + e.StockName.PadRight(12) + e.CurrentValue.ToString().PadRight(7) + e.NumChanges;
+            Console.WriteLine(output);
+            outputFile.WriteLine(output);
         }
+
+    }
+
+
+    /* GlobalHelper class
+        *  This class acts as a way to declare global variables in C#
+        *  so that every instance of the class can access one variable
+        */
+    public static class GlobalHelper
+    {
+        public static Boolean writeTitle = true;
     }
 }

@@ -22,6 +22,7 @@ namespace Lab3
         public int CurrentValue { get; set; }
         public int NumChanges { get; set; }
 
+
         public Stock(string name, int startingValue, int maxChange, int threshold)
         {
             StockName = name;
@@ -37,6 +38,7 @@ namespace Lab3
 
         public void Activate()
         {
+
             for (int i = 0; i < 25; i++)
             {
                 Thread.Sleep(500); //1/2 second
