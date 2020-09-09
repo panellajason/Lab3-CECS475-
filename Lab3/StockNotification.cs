@@ -1,4 +1,10 @@
-﻿using System;
+﻿// Jason Panella
+// John Bui
+// CECS 475
+// September 9, 2020
+// Lab 3
+
+using System;
 
 namespace Lab3
 {
