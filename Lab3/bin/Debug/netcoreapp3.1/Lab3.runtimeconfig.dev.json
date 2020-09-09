@@ -1,8 +1,9 @@
 {
   "runtimeOptions": {
     "additionalProbingPaths": [
-      "/Users/jpanella/.dotnet/store/|arch|/|tfm|",
-      "/Users/jpanella/.nuget/packages"
+      "C:\\Users\\firew\\.dotnet\\store\\|arch|\\|tfm|",
+      "C:\\Users\\firew\\.nuget\\packages",
+      "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
     ]
   }
 }

@@ -38,18 +38,22 @@ namespace Lab3
         */
         void EventHandler(Object sender, StockNotification e)
         {
-            using StreamWriter outputFile = new StreamWriter(Path.Combine(docPath, "output.txt"), true);
+            myLock.EnterWriteLock();
+            Stock nStock = (Stock)sender;
+            string output = BrokerName.PadRight(10) + nStock.StockName.PadRight(12) + nStock.CurrentValue.ToString().PadRight(7) + nStock.NumChanges;
 
-            if(GlobalHelper.writeTitle)
+            using (StreamWriter outputFile = new StreamWriter(Path.Combine(docPath, "output.txt"), true))
             {
-                GlobalHelper.writeTitle = false;
-                Console.WriteLine(titles);
-                outputFile.WriteLine(titles);
+                if (GlobalHelper.writeTitle)
+                {
+                    GlobalHelper.writeTitle = false;
+                    Console.WriteLine(titles);
+                    outputFile.WriteLine(titles);
+                }
+                outputFile.WriteLine(output);
             }
-
-            string output = BrokerName.PadRight(10) + e.StockName.PadRight(12) + e.CurrentValue.ToString().PadRight(7) + e.NumChanges;
             Console.WriteLine(output);
-            outputFile.WriteLine(output);
+            myLock.ExitWriteLock();
         }
 
     }
